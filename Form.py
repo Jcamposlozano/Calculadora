@@ -1,11 +1,15 @@
 from tkinter import *
 from Calculadora import *
 
+from Indicadores import *
+
 class Form:
+    inid = Indicadores()
 
     def __init__(self):
         self.root = Tk()
         self.calculadora = Calculadora()
+        self.dorlares = StringVar()
         self.n1 = StringVar()
         self.n2 = StringVar()
         self.resultado = StringVar()
@@ -33,8 +37,20 @@ class Form:
         self.n1.set("")
         self.n2.set("")
 
+    def divisas(self):
+        trm = self.inid.trm()
+        self.resultado.set(
+            round(
+            float(trm) * float(self.dorlares.get()),
+            3
+            )
+        ) 
+
     def formulario(self):
         self.root.config(bd=20)
+
+        Label(self.root, text="VALOR EN DOLARES").pack()
+        Entry(self.root, textvariable = self.dorlares ).pack()
 
         Label(self.root, text="NUMERO 1").pack()
         Entry(self.root, textvariable = self.n1 ).pack()
@@ -49,7 +65,7 @@ class Form:
         Button(self.root, text="-", command = self.restar).pack(side="left")
         Button(self.root, text="*", command = self.multiplicar).pack(side="left")
         Button(self.root, text="/", command = self.dividir).pack(side="left")
-
+        Button(self.root, text="Valor en Pesos", command = self.divisas).pack(side="left")   
 
         self.root.mainloop()
 
